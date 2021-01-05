@@ -1,0 +1,33 @@
+pipeline {
+    agent none
+    options { skipDefaultCheckout(true) }
+    stages {
+        stage('Build and Test') {
+            agent {
+                docker {
+                    image 'gradle:6.6.1-jdk11-openj9'
+                    args '-v /root/.m2:/root/.m2'
+                }
+            }
+            options { skipDefaultCheckout(false) }
+            steps {
+                sh 'mvn -B -DskipTests clean package'
+            }
+        }
+        stage('Docker build') {
+            agent any
+            steps {
+                sh 'docker build -t sbor_dev:latest .'
+            }
+        }
+        stage('Docker run') {
+            agent any
+            steps {
+                sh 'docker ps -f name=sbor_dev -q | xargs --no-run-if-empty docker container stop'
+                sh 'docker container ls -a -fname=sbor_dev -q | xargs -r docker container rm'
+                sh 'docker rmi $(docker images -f "dangling=true" -q)'
+                sh 'docker run -d --name sbor_dev -p 8080:8080 sbor_dev:latest'
+            }
+        }
+    }
+}
