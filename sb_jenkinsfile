@@ -5,7 +5,7 @@ pipeline {
         stage('Build and Test') {
             agent {
                 docker {
-                    image 'gradle:6.6.1-jdk11-openj9'
+                    image 'amd64/gradle:6.6.1-jdk11-openj9'
                     args '-v /root/.m2:/root/.m2'
                 }
             }
