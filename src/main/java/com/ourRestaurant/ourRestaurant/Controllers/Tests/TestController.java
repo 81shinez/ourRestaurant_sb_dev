@@ -21,8 +21,8 @@ public class TestController {
         //만약에 여기서 password라는 변수가 쓰인다면 매개변수는 다른 이름으로 password를 받아야함.
         //그렇게 되면 매핑이 안되므로 @RequestParam(name = "password") pwd이렇게 해주면
         // 들어오는 인자는 password라는 이름으로 매핑될거야 라는 뜻.
-        System.out.println("id :"+id);
-        System.out.println("password :"+password);
+        System.out.println("id ->"+id);
+        System.out.println("password ->"+password);
 
         return id+password; //여기서 return 한 것들이 web에 띄워짐
 
