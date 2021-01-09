@@ -25,7 +25,7 @@ pipeline {
             steps {
                 sh 'docker ps -f name=sbor_dev -q | xargs --no-run-if-empty docker container stop'
                 sh 'docker container ls -a -fname=sbor_dev -q | xargs -r docker container rm'
-                sh 'docker rmi $(docker images -f "dangling=true" -q)'
+                sh 'docker rmi $$(docker images -f "dangling=true" -q)'
                 sh 'docker run -d --name sbor_dev -p 8080:8080 sbor_dev:latest'
             }
         }
