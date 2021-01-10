@@ -1,8 +1,16 @@
 pipeline {
     agent none
+    //기본적으로 체크아웃을 하지 않는 옵션
     options { skipDefaultCheckout(true) }
     stages {
-        stage('Build and Test') {
+        stage('Checkout repository') {
+            agent any
+            steps {
+                checkout scm
+            }
+
+        }
+        stage('Build and test') {
             agent {
                 docker {
                     image 'amd64/gradle:6.6.1-jdk11-openj9'
@@ -10,7 +18,6 @@ pipeline {
                 }
             }
             steps {
-                checkout scm
                 sh 'gradle clean build -x test'
             }
         }
