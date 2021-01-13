@@ -12,7 +12,7 @@ public class TestController {
     @PostMapping("/ip")
     public ResponseEntity<String> ip(HttpServletRequest request) {
         // 요청을 보낸 클라이언트의 IP주소를 반환합니다.
-        return ResponseEntity.ok("222222");//request.getRemoteAddr());
+        return ResponseEntity.ok(request.getRemoteAddr());
     }
 
     @GetMapping("/getParameter") //localhost:8080/api/getParameter?id=1234&password=abcd 물음표 뒤부터가 파라미터터
