@@ -23,7 +23,7 @@ pipeline {
         stage('Docker build') {
             agent any
             steps {
-                sh 'docker build -f Dockerfile.raor_dev -t raor_dev:latest .'
+                sh 'docker build -f Dockerfile.orsb_dev -t orsb_dev:latest .'
             }
         }
         stage('Docker run') {
