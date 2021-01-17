@@ -23,16 +23,16 @@ pipeline {
         stage('Docker build') {
             agent any
             steps {
-                sh 'docker build -f Dockerfile.sbor_dev -t sbor_dev:latest .'
+                sh 'docker build -f Dockerfile.raor_dev -t raor_dev:latest .'
             }
         }
         stage('Docker run') {
             agent any
             steps {
-                sh 'docker ps -f name=sbor_dev -q | xargs --no-run-if-empty docker container stop'
-                sh 'docker container ls -a -fname=sbor_dev -q | xargs -r docker container rm'
+                sh 'docker ps -f name=orsb_dev -q | xargs --no-run-if-empty docker container stop'
+                sh 'docker container ls -a -fname=orsb_dev -q | xargs -r docker container rm'
                 sh 'docker images --no-trunc --all --quiet --filter="dangling=true" | xargs --no-run-if-empty docker rmi'
-                sh 'docker run -d --name sbor_dev --network or_dev -p 8081:8080 sbor_dev:latest'
+                sh 'docker run -d --name orsb_dev --network or_dev -p 8081:8080 orsb_dev:latest'
             }
         }
     }
