@@ -21,5 +21,21 @@ spec:
           env:
             - name: DATE
               value: 'DATE_STRING'
+            - name: loglevel
+              valueFrom:
+                configMapKeyRef:
+                  name: cm-ordev
+                  key: loglevel
+            - name: mysql-username
+              valueFrom:
+                secretKeyRef:
+                  name: sc-ordev
+                  key: loglevel
+            - name: password
+              valueFrom:
+                configMapKeyRef:
+                  name: cm-ordev
+                  key: loglevel
+                  - name: mysql-password
       imagePullSecrets:
         - name: sr-orsb-dev
