@@ -52,7 +52,7 @@ podTemplate(label: 'builder',
 
                         /* secret 존재여부 확인. 미존재시 secret 생성 */
                         sh """
-                            kubectl get secret my-secret -n ${NAMESPACE} || \
+                            kubectl get secret sr-orsb-dev -n ${NAMESPACE} || \
                             kubectl create secret docker-registry sr-orsb-dev \
                             --docker-server=https://index.docker.io/v1/ \
                             --docker-username=${USERNAME} \
