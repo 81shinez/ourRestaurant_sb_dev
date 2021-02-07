@@ -1,5 +1,7 @@
 package com.ourRestaurant.ourRestaurant.Controllers.Tests;
 
+import com.ourRestaurant.ourRestaurant.DAOs.Tests.TestDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/api")
 @RestController
 public class TestController {
+    @Autowired
+    private TestDAO testDAO;
 
     @PostMapping("/ip")
     public ResponseEntity<String> ip(HttpServletRequest request) {
@@ -26,6 +30,11 @@ public class TestController {
 
         return id+password; //여기서 return 한 것들이 web에 띄워짐
 
+    }
+
+    @GetMapping("/getTestSql")
+    public String getTestSql(){
+        return testDAO.selectTest().toString();
     }
 }
 
