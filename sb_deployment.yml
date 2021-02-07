@@ -30,12 +30,11 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: sc-ordev
-                  key: loglevel
-            - name: password
+                  key: mysql-username
+            - name: mysql-password
               valueFrom:
-                configMapKeyRef:
-                  name: cm-ordev
-                  key: loglevel
-                  - name: mysql-password
+                secretKeyRef:
+                  name: sc-ordev
+                  key: mysql-password
       imagePullSecrets:
         - name: sr-orsb-dev
