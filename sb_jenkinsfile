@@ -36,6 +36,8 @@ podTemplate(label: 'builder',
                         sh "docker build -f Dockerfile.orsb_dev -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAGS} ."
                         sh "docker login -u ${USERNAME} -p ${PASSWORD}"
                         sh "docker push ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAGS}"
+                        sh 'docker ps --no-trunc --all --quiet --filter="status=exited" | xargs --no-run-if-empty docker rm'
+                        sh 'docker images --no-trunc --all --quiet --filter="dangling=true" | xargs --no-run-if-empty docker rmi'
                 }
             }
         }
@@ -68,17 +70,6 @@ podTemplate(label: 'builder',
                         sh "kubectl apply -f ./sb_deployment.yml -n ${NAMESPACE}"
                         sh "kubectl apply -f ./sb_service.yml -n ${NAMESPACE}"
                     }
-            }
-        }
-        stage('Docker Clear') {
-            container('docker') {
-                withCredentials([usernamePassword(
-                    credentialsId: 'docker_hub_auth',
-                    usernameVariable: 'USERNAME',
-                    passwordVariable: 'PASSWORD')]) {
-                        sh 'docker ps --no-trunc --all --quiet --filter="status=exited" | xargs --no-run-if-empty docker rm'
-                        sh 'docker images --no-trunc --all --quiet --filter="dangling=true" | xargs --no-run-if-empty docker rmi'
-                }
             }
         }
     }
