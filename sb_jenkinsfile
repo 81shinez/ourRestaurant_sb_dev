@@ -69,6 +69,8 @@ podTemplate(label: 'builder',
                         sh "kubectl apply -f ./sb_service.yml -n ${NAMESPACE}"
                     }
             }
+        }
+        stage('Docker Clear') {
             container('docker') {
                 withCredentials([usernamePassword(
                     credentialsId: 'docker_hub_auth',
