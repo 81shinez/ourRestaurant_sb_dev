@@ -1,12 +1,8 @@
 package com.ourRestaurant.ourRestaurant.DTOs.Tests;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
-@Getter
-@Setter
-@ToString
+@Data
 public class TestDTO {
     private String test;
 }

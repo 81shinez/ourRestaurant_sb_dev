@@ -34,7 +34,7 @@ public class TestController {
 
     @GetMapping("/getTestSql")
     public String getTestSql(){
-        return testDAO.selectTest().getTest();
+        return testDAO.selectTest().getTest().concat("ggg");
     }
 }
 
