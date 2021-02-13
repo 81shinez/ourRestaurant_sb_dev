@@ -27,6 +27,7 @@ public class TestController {
         // 들어오는 인자는 password라는 이름으로 매핑될거야 라는 뜻.
         System.out.println("id ->"+id);
         System.out.println("password ->"+password);
+        System.out.println("Jinhak First Code");
 
         return id+password; //여기서 return 한 것들이 web에 띄워짐
 
