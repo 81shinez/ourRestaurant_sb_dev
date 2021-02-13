@@ -10,7 +10,7 @@ podTemplate(label: 'builder',
                 //젠킨스 슬레이브 컨테이너는 선언하지 않아도 자동으로 포함되지만 리소스 제한을 설정하기 위해서는 직접 선언해줘야 한다.
                 containerTemplate(
                     name: 'jnlp',
-                    image: "jenkins/inbound-agent:4.3-4"
+                    image: "jenkins/inbound-agent:4.3-4",
                     resources:
                       limits: {}
                       requests:
