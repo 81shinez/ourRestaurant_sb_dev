@@ -7,24 +7,26 @@ def DATE = new Date();
 
 podTemplate(label: 'builder',
             containers: [
+                //젠킨스 슬레이브 컨테이너는 선언하지 않아도 자동으로 포함되지만 리소스 제한을 설정하기 위해서는 직접 선언해줘야 한다.
+                containerTemplate(
+                    name: 'jnlp',
+                    image: "jenkins/inbound-agent:4.3-4"
+                    resources:
+                      limits: {}
+                      requests:
+                        memory: "500Mi"
+                        cpu: "1000m"
+                ),
                 containerTemplate(
                     name: 'gradle',
                     image: 'gradle:6.6.1-jdk11-openj9',
-                    command: 'cat', ttyEnabled: true,
-                    resourceRequestCpu: '250m',
-                    resourceLimitCpu: '500m',
-                    resourceRequestMemory: '500Mi',
-                    resourceLimitMemory: '1000Mi'
+                    command: 'cat', ttyEnabled: true
                 ),
                 containerTemplate(
                     name: 'docker',
                     image: 'docker',
                     command: 'cat',
-                    ttyEnabled: true,
-                    resourceRequestCpu: '500m',
-                    resourceLimitCpu: '1000m',
-                    resourceRequestMemory: '1000Mi',
-                    resourceLimitMemory: '2000Mi'
+                    ttyEnabled: true
                 ),
                 containerTemplate(
                     name: 'kubectl',
