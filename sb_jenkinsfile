@@ -11,11 +11,8 @@ podTemplate(label: 'builder',
                 containerTemplate(
                     name: 'jnlp',
                     image: "jenkins/inbound-agent:4.3-4",
-                    resources:
-                      limits: {}
-                      requests:
-                        memory: "500Mi"
-                        cpu: "1000m"
+                    resourceRequestCpu: '500m',
+                    resourceRequestMemory: '1000Mi'
                 ),
                 containerTemplate(
                     name: 'gradle',
