@@ -11,16 +11,20 @@ podTemplate(label: 'builder',
                     name: 'gradle',
                     image: 'gradle:6.6.1-jdk11-openj9',
                     command: 'cat', ttyEnabled: true
-                    resourceRequestCpu: '500m',
-                    resourceLimitCpu: '1000m',
-                    resourceRequestMemory: '1000Mi',
-                    resourceLimitMemory: '2000Mi',
+                    resourceRequestCpu: '250m',
+                    resourceLimitCpu: '500m',
+                    resourceRequestMemory: '500Mi',
+                    resourceLimitMemory: '1000Mi'
                 ),
                 containerTemplate(
                     name: 'docker',
                     image: 'docker',
                     command: 'cat',
                     ttyEnabled: true
+                    resourceRequestCpu: '500m',
+                    resourceLimitCpu: '1000m',
+                    resourceRequestMemory: '1000Mi',
+                    resourceLimitMemory: '2000Mi'
                 ),
                 containerTemplate(
                     name: 'kubectl',
