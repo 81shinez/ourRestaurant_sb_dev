@@ -10,7 +10,7 @@ podTemplate(label: 'builder',
                 containerTemplate(
                     name: 'gradle',
                     image: 'gradle:6.6.1-jdk11-openj9',
-                    command: 'cat', ttyEnabled: true
+                    command: 'cat', ttyEnabled: true,
                     resourceRequestCpu: '250m',
                     resourceLimitCpu: '500m',
                     resourceRequestMemory: '500Mi',
@@ -20,7 +20,7 @@ podTemplate(label: 'builder',
                     name: 'docker',
                     image: 'docker',
                     command: 'cat',
-                    ttyEnabled: true
+                    ttyEnabled: true,
                     resourceRequestCpu: '500m',
                     resourceLimitCpu: '1000m',
                     resourceRequestMemory: '1000Mi',
