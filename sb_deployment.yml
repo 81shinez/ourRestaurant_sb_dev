@@ -36,5 +36,6 @@ spec:
                 secretKeyRef:
                   name: sc-ordev
                   key: mysql-password
+      revisionHistoryLimit: 2
       imagePullSecrets:
         - name: sr-orsb-dev
