@@ -7,9 +7,30 @@ def DATE = new Date();
 
 podTemplate(label: 'builder',
             containers: [
-                containerTemplate(name: 'gradle', image: 'gradle:6.6.1-jdk11-openj9', command: 'cat', ttyEnabled: true),
-                containerTemplate(name: 'docker', image: 'docker', command: 'cat', ttyEnabled: true),
-                containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.20.2', command: 'cat', ttyEnabled: true)
+                //젠킨스 슬레이브 컨테이너는 선언하지 않아도 자동으로 포함되지만 리소스 제한을 설정하기 위해서는 직접 선언해줘야 한다.
+                containerTemplate(
+                    name: 'jnlp',
+                    image: "jenkins/inbound-agent:4.3-4",
+                    resourceRequestCpu: '500m',
+                    resourceRequestMemory: '1000Mi'
+                ),
+                containerTemplate(
+                    name: 'gradle',
+                    image: 'gradle:6.6.1-jdk11-openj9',
+                    command: 'cat', ttyEnabled: true
+                ),
+                containerTemplate(
+                    name: 'docker',
+                    image: 'docker',
+                    command: 'cat',
+                    ttyEnabled: true
+                ),
+                containerTemplate(
+                    name: 'kubectl',
+                    image: 'lachlanevenson/k8s-kubectl:v1.20.2',
+                    command: 'cat',
+                    ttyEnabled: true
+                )
             ],
             volumes: [
                 hostPathVolume(mountPath: '/home/gradle/.gradle', hostPath: '/home/hshdev/jenkins/.gradle'),
@@ -36,7 +57,7 @@ podTemplate(label: 'builder',
                         sh "docker build -f Dockerfile.orsb_dev -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAGS} ."
                         sh "docker login -u ${USERNAME} -p ${PASSWORD}"
                         sh "docker push ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAGS}"
-                }
+                    }
             }
         }
         stage('Run kubectl') {
@@ -70,16 +91,17 @@ podTemplate(label: 'builder',
                     }
             }
         }
-        stage('Docker Clear') {
-            container('docker') {
-                withCredentials([usernamePassword(
-                    credentialsId: 'docker_hub_auth',
-                    usernameVariable: 'USERNAME',
-                    passwordVariable: 'PASSWORD')]) {
-                        sh 'docker ps --no-trunc --all --quiet --filter="status=exited" | xargs --no-run-if-empty docker rm'
-                        sh 'docker images --no-trunc --all --quiet --filter="dangling=true" | xargs --no-run-if-empty docker rmi'
-                }
-            }
+        stage('Docker clear') {
+                    container('docker') {
+                        withCredentials([usernamePassword(
+                            credentialsId: 'docker_hub_auth',
+                            usernameVariable: 'USERNAME',
+                            passwordVariable: 'PASSWORD')]) {
+                                sh 'docker ps --no-trunc --all --quiet --filter="status=exited" | xargs --no-run-if-empty docker rm'
+                                sh 'docker image prune -f'
+                                //sh 'docker images --no-trunc --all --quiet --filter="dangling=true" | xargs --no-run-if-empty docker rmi'
+                        }
+                    }
         }
     }
 }
