@@ -1,6 +1,7 @@
 package com.ourRestaurant.ourRestaurant.Controllers.Tests;
 
 import com.ourRestaurant.ourRestaurant.DAOs.Tests.TestDAO;
+import com.ourRestaurant.ourRestaurant.Services.Tests.PapagoCall;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,11 @@ public class TestController {
 
         return id+password; //여기서 return 한 것들이 web에 띄워짐
 
+    }
+
+    public String getPapagoAnswer(@RequestParam String queryMessage){
+        PapagoCall papagoCall = new PapagoCall();
+        return papagoCall.execute(queryMessage);
     }
 
     @GetMapping("/getTestSql")
