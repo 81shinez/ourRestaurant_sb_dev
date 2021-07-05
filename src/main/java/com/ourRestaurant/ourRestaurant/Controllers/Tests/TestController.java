@@ -34,6 +34,7 @@ public class TestController {
 
     }
 
+    @GetMapping("/getPapagoAnswer")
     public String getPapagoAnswer(@RequestParam String queryMessage){
         PapagoCall papagoCall = new PapagoCall();
         return papagoCall.execute(queryMessage);
